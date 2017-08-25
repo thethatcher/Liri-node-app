@@ -48,9 +48,12 @@ function movieThis(movie){
 }
 
 function doWhatItSays(){
-	fs.read("../random.txt","utf8",function(error,data){
-
-		run();
+	fs.readFile("../random.txt","utf8",function(error,data){
+		var temp = data.split(",");
+		if(temp[0] === "my-tweets"){myTweets();}
+		else if(temp[0] === "spotify-this-song"){spotifyThisSong(temp[1]);}
+		else if(temp[0] === "movie-this"){movieThis(temp[1]);}
+		else{console.log("invalid input."); run();}
 	});
 	
 }
