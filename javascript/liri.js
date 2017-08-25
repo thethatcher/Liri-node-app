@@ -14,7 +14,7 @@ var spotifyClient = new spotify({
 	,secret: keys.spotifyKeys.secret
 }); 
 
-spotifyThisSong("the impression that I get");
+run();
 
 function myTweets(){
 	client.get("statuses/user_timeline",{screen_name:"bootcamptrash"}, function(error, tweets, response){
@@ -27,7 +27,9 @@ function myTweets(){
 				}
 			}
 		}
+		run();
 	});
+	
 }
 
 function spotifyThisSong(song){
@@ -36,15 +38,52 @@ function spotifyThisSong(song){
 		console.log("Album: " + data.tracks.items[0].album.name);
 		console.log("Song: " + data.tracks.items[0].name);
 		console.log("Preview: " + data.tracks.items[0].preview_url);
+		run();
 	})
 }
 
 function movieThis(movie){
 
+	run();
 }
 
 function doWhatItSays(){
 	fs.read("../random.txt","utf8",function(error,data){
 
+		run();
+	});
+	
+}
+
+function run(){
+	inquire.prompt([
+		{
+			message: "What would you like to run?"
+			,type: "list"
+			,choices:["my-Tweets","Spotify-this-song","Movie-this","Do-what-it-says","EXIT"]
+			,name:"function"
+		}
+	]).then(function(answers){
+		if(answers.function === "my-Tweets"){myTweets();}
+		else if(answers.function === "Spotify-this-song"){
+			inquire.prompt([{
+				message:"What song are we Spotifying?"
+				,type: "input"
+				,name: "song"
+			}]).then(function(subAnswer){
+				spotifyThisSong(subAnswer.song);
+			});
+		}
+		else if(answers.function === "Movie-this"){
+			inquire.prompt([{
+				message:"What move are we this-ing?"
+				,type: "input"
+				,name: "movie"
+			}]).then(function(subAnswer){
+				movieThis(subAnswer.movie);
+			});
+		}
+		else if(answers.function === "Do-what-it-says"){doWhatItSays();}
+		if(answers.function === "EXIT"){console.log("Thank you for using the this thing!");}
 	});
 }
