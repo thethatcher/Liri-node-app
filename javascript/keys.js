@@ -9,3 +9,5 @@ exports.spotifyKeys = {
 	id:"e88f4c8c4c8a4c5cadb9bf6b2a51f902"
 	,secret:"6de0c57f99504163b62a731f6ec74b38"
 }
+
+exports.omdbKey = "40e9cece"

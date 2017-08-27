@@ -3,6 +3,7 @@ var fs = require("fs");
 var twitter = require("twitter");
 var keys = require('./keys.js');
 var spotify = require('node-spotify-api');
+var request = require("request");
 var client = new twitter({
 	consumer_key: keys.twitterKeys.consumer_key
 	,consumer_secret: keys.twitterKeys.consumer_secret
@@ -13,6 +14,7 @@ var spotifyClient = new spotify({
 	 id: keys.spotifyKeys.id
 	,secret: keys.spotifyKeys.secret
 }); 
+console.log(keys.omdbKey);
 
 run();
 
@@ -43,8 +45,22 @@ function spotifyThisSong(song){
 }
 
 function movieThis(movie){
-
-	run();
+	var url = "http://www.omdbapi.com/?t=" + movie + "&apikey=" + keys.omdbKey
+	request(url,function(error,response,body){
+		if(error){console.log(error);}
+		else if(response.statusCode === 200){
+			var data = JSON.parse(body);
+			console.log("Movie: " + data.Title);
+			console.log("Released: " + data.Year);
+			console.log("IMDB Rating: " + data.Ratings[0].Value);
+			console.log("Rotton Tomatoes Rating: " + data.Ratings[1].Value);
+			console.log("Produced in: " + data.Country);
+			console.log("Language: " + data.Language);
+			console.log("Plot: " + data.Plot);
+			console.log("Actors: " + data.Actors);
+		}
+		run();
+	});
 }
 
 function doWhatItSays(){
@@ -74,16 +90,18 @@ function run(){
 				,type: "input"
 				,name: "song"
 			}]).then(function(subAnswer){
-				spotifyThisSong(subAnswer.song);
+				if(subAnswer.length > 0){spotifyThisSong(subAnswer.song);}
+				else{spotifyThisSong("The Sign, ace of base");}
 			});
 		}
 		else if(answers.function === "Movie-this"){
 			inquire.prompt([{
-				message:"What move are we this-ing?"
+				message:"What movie are we this-ing?"
 				,type: "input"
 				,name: "movie"
 			}]).then(function(subAnswer){
-				movieThis(subAnswer.movie);
+				if(subAnswer.length > 0){movieThis(subAnswer.movie);}
+				else{movieThis("Mr. Nobody");}
 			});
 		}
 		else if(answers.function === "Do-what-it-says"){doWhatItSays();}
