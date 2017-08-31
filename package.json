@@ -1,0 +1,25 @@
+{
+  "name": "liri-node-app",
+  "version": "1.0.0",
+  "description": "U of U bootcamp assignment about npm modules",
+  "main": "liri.js",
+  "scripts": {
+    "test": "node liri.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thethatcher/Liri-node-app.git"
+  },
+  "author": "Ryan Thatcher",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thethatcher/Liri-node-app/issues"
+  },
+  "homepage": "https://github.com/thethatcher/Liri-node-app#readme",
+  "dependencies": {
+    "inquirer": "^3.2.2",
+    "node-spotify-api": "^1.0.7",
+    "request": "^2.81.0",
+    "twitter": "^1.7.1"
+  }
+}
