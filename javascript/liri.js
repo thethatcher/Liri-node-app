@@ -91,7 +91,7 @@ function run(){
 				,type: "input"
 				,name: "song"
 			}]).then(function(subAnswer){
-				if(subAnswer.length > 0){spotifyThisSong(subAnswer.song);}
+				if(subAnswer.song.length > 0){spotifyThisSong(subAnswer.song);}
 				else{spotifyThisSong("The Sign, ace of base");}
 			});
 		}
@@ -101,7 +101,7 @@ function run(){
 				,type: "input"
 				,name: "movie"
 			}]).then(function(subAnswer){
-				if(subAnswer.length > 0){movieThis(subAnswer.movie);}
+				if(subAnswer.movie.length > 0){movieThis(subAnswer.movie);}
 				else{movieThis("Mr. Nobody");}
 			});
 		}
